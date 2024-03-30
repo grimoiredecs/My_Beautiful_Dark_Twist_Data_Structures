@@ -242,6 +242,49 @@ class BST
     {
         clearRec(root);
     }
+
+
+    T getMin()
+    {
+        auto getMinRec = [](Node* &root)-> T
+        {
+            if(root->left == nullptr)
+                return root->data;
+            return getMinRec(root->left);
+        };
+        return getMinRec(this->root);
+    }
+    inline T getMaxRec(Node*& root)
+    {
+        if(root->right == nullptr)
+            return root->data;
+        return getMaxRec(root->right);
+    }
+    T getMax()
+    {
+        return getMaxRec(root);
+    }
+
+    bool find(T i)
+    {
+        return contains(root, i);
+    }
+    T sum (T l, T r)
+    {
+        auto sumRec = [](Node* &root, T l, T r)-> T
+        {
+            if(root == nullptr)
+                return 0;
+            if (root->data < l && root->data > r)
+                return root->data + sumRec(root->left, l, r) + sumRec(root->right, l, r);
+            if(root->data < l)
+                return sumRec(root->right, l, r);
+            if(root->data > r)
+                return sumRec(root->left, l, r);
+            return sumRec(root->left, l, r) + sumRec(root->right, l, r);
+        };
+        return sumRec(root, l, r);
+    }
     ~BST()
     {
         clear();
