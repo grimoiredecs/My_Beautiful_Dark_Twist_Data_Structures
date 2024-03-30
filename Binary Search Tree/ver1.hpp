@@ -237,7 +237,27 @@ class BST
                 q.push(current->right);
         }
     }
-
+    void BFS()
+    {
+        queue<Node*> qe;
+       qe.push(this->root);
+       
+        while(!qe.empty())
+        {
+            
+            Node* tmp = qe.top();
+            qe.pop();
+            cout << tmp->data; << " ";
+            if (tmp->left != nullptr)
+            {
+                qe.push(tmp->left);
+            }
+            if (tmp->right !=nullptr)
+            {
+                qe.push(tmp->right);
+            }
+        }
+    }
     void clearRec(Node* &root)
     {
         if(root == nullptr)
@@ -344,6 +364,7 @@ class BST
         
         }
 
+    
     ~BST()
     {
         clear();
