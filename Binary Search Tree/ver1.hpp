@@ -275,7 +275,7 @@ class BST
         {
             if(root == nullptr)
                 return 0;
-            if (root->data < l && root->data > r)
+            if (root->data >= l && root->data <= r)
                 return root->data + sumRec(root->left, l, r) + sumRec(root->right, l, r);
             if(root->data < l)
                 return sumRec(root->right, l, r);
