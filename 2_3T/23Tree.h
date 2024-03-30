@@ -19,7 +19,8 @@ class TTTree
     class TTNode<T>
     {
         public:
-        T data;
+        T ldata;
+        T rdata;
         Key key;
         TTNode<T> *left;
         TTNode<T> *middle;
@@ -27,7 +28,7 @@ class TTTree
 
         TTNode(T da, Key ke)
         {
-            data = da;
+            ldata = da;
             key = ke;
             left = nullptr;
             middle = nullptr;
@@ -36,7 +37,6 @@ class TTTree
         TTNode()
         {
             left=right=middle=nullptr;
-            data = NULL;
         }
 
         ~TTNode()
@@ -62,15 +62,16 @@ class TTTree
         TTNode<T> *current = root;
         while(current!=nullptr)
         {
-            if(current->key.id == key.id)
+            if(stoi(current->key.id) == stoi(key.id))
             {
                 return current->data;
             }
-            else if(key.id < current->key.id)
+            
+            else if(stoi(key.id) < stoi(current->key.id))
             {
                 current = current->left;
             }
-            else if(key.id > current->key.id)
+            else if(stoi(key.id) > stoi(current->key.id))
             {
                 current = current->right;
             }
