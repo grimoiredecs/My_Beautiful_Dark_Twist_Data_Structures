@@ -1,6 +1,15 @@
 #include <iostream>
 #include <string>
 #include <queue>
+#include <vector>
+#include <climits>
+#include <functional>  
+#include <algorithm>
+#include <stack>
+#include <unordered_map>
+#include <unordered_set>
+#include <set>
+#include <map>
 using namespace std;
 
 template<typename T>
@@ -285,6 +294,56 @@ class BST
         };
         return sumRec(root, l, r);
     }
+    int rangeCount(int lo, int hi)
+    {
+        auto rangeC = [] (Node* &root, int lo, int hi)-> int
+        {
+            if(root == nullptr)
+                return 0;
+            if(root->data >= lo && root->data <= hi)
+                return 1 + rangeC(root->left, lo, hi) + rangeC(root->right, lo, hi);
+            if(root->data < lo)
+                return rangeC(root->right, lo, hi);
+            if(root->data > hi)
+                return rangeC(root->left, lo, hi);
+            return rangeC(root->left, lo, hi) + rangeC(root->right, lo, hi);
+        };
+        return rangeC(this->root, lo, hi);
+    }
+
+    int singleChild()
+    {
+        auto singlechild = [] (Node* &root)-> int
+        {
+            if(root == nullptr)
+                return 0;
+            if(root->left == nullptr && root->right != nullptr)
+                return 1 + singlechild(root->right);
+            if(root->left != nullptr && root->right == nullptr)
+                return 1 + singlechild(root->left);
+            return singlechild(root->left) + singlechild(root->right);
+        };
+        return singlechild(this->root);
+    }
+
+    int kSmallest(int &k)
+    {
+        auto ksmallest = [](Node* &root) -> int
+        {
+            if(root == nullptr)
+                return INT_MAX;
+            int left = ksmallest(root->left);
+            if(left != INT_MAX)
+                return left;
+            if(k == 0)
+                return root->data;
+            k--;
+            return ksmallest(root->right);
+
+        };
+        
+        }
+
     ~BST()
     {
         clear();
