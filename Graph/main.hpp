@@ -36,7 +36,7 @@ public:
     virtual void dfs(int start) = 0;
 
     void printPath(int start, int end, vector<int> &parent);
-    void dijkstra(int start);
+    vector<int> dijkstra(int start);
     void prim(int start);
     void kruskal();
     void floyd();
