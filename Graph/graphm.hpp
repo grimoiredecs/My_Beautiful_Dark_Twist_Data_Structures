@@ -52,7 +52,7 @@ class Graphm : public Graph
 {
 private:
     vector<vector<int>> matrix;
-    vector<int> mark;
+    vector<bool> mark;
     int numVertex;
     int numEdge;
 
@@ -176,7 +176,7 @@ public:
                 }
             }
         }
-    }
+        }
     void dfs(int start) override
     {
         stack<int> s;
