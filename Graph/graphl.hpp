@@ -310,39 +310,22 @@ public:
     {
         vector<int> dist(numVertex, INT_MAX);
         dist[start] = 0;
-        for (int i = 0; i < numVertex - 1; i++)
+        for (int i = 0; i < this->numVertex; ++i)
         {
-            for (int j = 0; j < numVertex; j++)
+            for (int j = 0; j < this->numVertex; ++j)
             {
-                for (auto it = edges[j].begin(); it != edges[j].end(); it++)
+                for (auto it = edges[j].begin(); it != edges[j].end(); ++it)
                 {
                     int v = it->vertex;
                     int weight = it->weight;
-                    if (dist[v] > dist[j] + weight)
+                    if (dist[j] != INT_MAX && dist[v] > dist[j] + weight)
                     {
                         dist[v] = dist[j] + weight;
                     }
                 }
             }
         }
-        for (int j = 0; j < numVertex; j++)
-        {
-            for (auto it = edges[j].begin(); it != edges[j].end(); it++)
-            {
-                int v = it->vertex;
-                int weight = it->weight;
-                if (dist[v] > dist[j] + weight)
-                {
-                    cout << "Negative cycle detected" << endl;
-                    return;
-                }
-            }
         }
-        for (int i = 0; i < numVertex; i++)
-        {
-            cout << "Distance from " << start << " to " << i << " is " << dist[i] << endl;
-        }
-    }
 
     void floyd()
     {
