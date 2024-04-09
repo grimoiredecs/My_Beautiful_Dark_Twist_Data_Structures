@@ -73,3 +73,37 @@ def successor(root,val):
     temp = successor(root['right'],val)
     return temp if temp else None
 
+
+#main function
+if __name__ == '__main__':
+    root = None
+    root = insert(root,50)
+    root = insert(root,30)
+    root = insert(root,20)
+    root = insert(root,40)
+    root = insert(root,70)
+    root = insert(root,60)
+    root = insert(root,80)
+    print(inorder(root))
+    print(preorder(root))
+    print(postorder(root))
+    print(search(root,40))
+    print(search(root,100))
+    print(height(root))
+    print(minimum(root))
+    print(maximum(root))
+    print(successor(root,40))
+    root = delete(root,40)
+    print(inorder(root))
+    root = delete(root,70)
+    print(inorder(root))
+    root = delete(root,50)
+    print(inorder(root))
+    root = delete(root,100)
+    print(inorder(root))
+    print(successor(root,60))
+    print(successor(root,80))
+    print(successor(root,100))
+    print(successor(root,20))
+    print(successor(root,30))
+    
