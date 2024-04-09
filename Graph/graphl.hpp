@@ -182,67 +182,128 @@ public:
     }
     void kruskal()
     {
-        vector<pair<int, pair<int, int>>> edges;
+        // with priority queue
+        priority_queue<pair<int, pair<int, int>>, vector<pair<int, pair<int, int>>>, greater<pair<int, pair<int, int>>>>
+            pq;
         for (int i = 0; i < numVertex; i++)
         {
-            for (auto it = this->edges[i].begin(); it != this->edges[i].end(); it++)
+            for (auto it = edges[i].begin(); it != edges[i].end(); it++)
             {
-                edges.push_back({it->weight, {i, it->vertex}});
+                pq.push({it->weight, {i, it->vertex}});
             }
         }
-        sort(edges.begin(), edges.end());
         vector<int> parent(numVertex);
         for (int i = 0; i < numVertex; i++)
         {
             parent[i] = i;
         }
         int cost = 0;
-        for (int i = 0; i < edges.size(); i++)
+        while (!pq.empty())
         {
-            int v1 = edges[i].second.first;
-            int v2 = edges[i].second.second;
-            int w = edges[i].first;
-            if (parent[v1] != parent[v2])
+            int u = pq.top().second.first;
+            int v = pq.top().second.second;
+            int weight = pq.top().first;
+            pq.pop();
+            int setU = u;
+            int setV = v;
+            while (parent[setU] != setU)
             {
-                cost += w;
-                int oldParent = parent[v2];
-                for (int j = 0; j < numVertex; j++)
-                {
-                    if (parent[j] == oldParent)
-                    {
-                        parent[j] = parent[v1];
-                    }
-                }
+                setU = parent[setU];
+            }
+            while (parent[setV] != setV)
+            {
+                setV = parent[setV];
+            }
+            if (setU != setV)
+            {
+                cout << u << " - " << v << " : " << weight << endl;
+                cost += weight;
+                parent[setU] = setV;
             }
         }
-        cout << "Cost of MST: " << cost << endl;
+        cout << "Cost : " << cost << endl;
     }
 
-    void dijkstra(int start)
+    void prim(int v)
     {
-        vector<int> dist(numVertex, INT_MAX);
-        dist[start] = 0;
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
-        pq.push({0, start});
+        vector<int> key(numVertex, INT_MAX);
+        vector<int> parent(numVertex, -1);
+        vector<bool> inMST(numVertex, false);
+        pq.push({0, v});
+        key[v] = 0;
         while (!pq.empty())
         {
             int u = pq.top().second;
             pq.pop();
+            inMST[u] = true;
             for (auto it = edges[u].begin(); it != edges[u].end(); it++)
             {
                 int v = it->vertex;
                 int weight = it->weight;
-                if (dist[v] > dist[u] + weight)
+                if (!inMST[v] && key[v] > weight)
                 {
-                    dist[v] = dist[u] + weight;
-                    pq.push({dist[v], v});
+                    key[v] = weight;
+                    pq.push({key[v], v});
+                    parent[v] = u;
                 }
             }
         }
         for (int i = 0; i < numVertex; i++)
         {
-            cout << "Distance from " << start << " to " << i << " is " << dist[i] << endl;
+            if (i != v)
+            {
+                cout << parent[i] << " - " << i << " : " << key[i] << endl;
+            }
         }
+    }
+
+    void dijkstra(int start, int end)
+    {
+        using pii = std::pair<int, int>;
+        const int numVertex = this->numVertex;
+        std::priority_queue<pii, std::vector<pii>, std::greater<pii>> pq;
+        std::unordered_map<int, int> dist;
+        std::unordered_map<int, int> parent;
+
+        pq.push({0, start});
+        dist[start] = 0;
+
+        while (!pq.empty())
+        {
+            int u = pq.top().second;
+            pq.pop();
+
+            for (const auto &edge : edges[u])
+            {
+                int v = edge.vertex;
+                int weight = edge.weight;
+                int new_dist = dist[u] + weight;
+
+                if (dist.count(v) == 0 || new_dist < dist[v])
+                {
+                    dist[v] = new_dist;
+                    parent[v] = u;
+                    pq.push({new_dist, v});
+                }
+            }
+        }
+
+        std::cout << "Distance from " << start << " to " << end << " is " << dist[end] << std::endl;
+        std::cout << "Path: ";
+
+        int i = end;
+        while (i != start)
+        {
+            std::cout << i << " ";
+            i = parent[i];
+        }
+
+        std::cout << start << std::endl;
+    }
+
+    void dijkstra(int start)
+    {
     }
 
     void bellman(int start)
