@@ -1,14 +1,17 @@
 #include <iostream>
 #include <map>
-#include <vector>
-#include <set>
 #include <queue>
-
+#include <set>
+#include <stack>
+#include <vector>
 using namespace std;
 
-template<typename T>
-class Dict
-{
-  private:
-    void 
+template <typename T> class dict {
+private:
+  void operator=(const dict &) {}
+  dict(const dict &) {}
+
+public:
+  dict() {}
+  virtual ~
 };
