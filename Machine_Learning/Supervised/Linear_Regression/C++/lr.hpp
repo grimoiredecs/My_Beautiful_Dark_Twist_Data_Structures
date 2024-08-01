@@ -24,4 +24,6 @@ public:
 
   vector<vector<T>> getData();
   bool readcsv(const char *fileName);
+  T retrieve(int i, int j);
+  T retrieve(string i, string j);
 };

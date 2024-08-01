@@ -13,3 +13,8 @@ template <typename T> bool dataset<T>::readcsv(const char *fileName) {
   while (getline(myfile, columns, ' ')) {
   }
 }
+template <typename T> T dataset<T>::retrieve(int i, int j) {
+  T res = data[i][j];
+  return res;
+}
+template <typename T> T dataset<T>::retrieve(string i, string j) {}
