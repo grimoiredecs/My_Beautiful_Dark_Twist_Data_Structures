@@ -7,7 +7,7 @@ template <typename T> bool dataset<T>::readcsv(const char *fileName) {
   if (!myfile) {
     throw std::runtime_error("Could not open file");
   }
-  string str;
+  string str; // line
   cout << "Enter the name of your dependent variable: ";
   getline(std::cin, str);
   while (getline(myfile, columns, ' ')) {
