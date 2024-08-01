@@ -6,6 +6,7 @@
 #include <iostream>
 #include <list>
 #include <map>
+#include <sstream>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -16,6 +17,7 @@ private:
   long long x_n;
   long long y_n;
   vector<vector<T>> data;
+  vector<stringstream> columns;
 
 public:
   dataset(){};
